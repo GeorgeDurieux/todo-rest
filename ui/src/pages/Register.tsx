@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setLoading } from '../features/auth/authSlice';
+import { setLoading, setToken } from '../features/auth/authSlice';
 import type { AppDispatch, RootState } from '../app/store';
 import { useNavigate } from 'react-router-dom';
 import { register as registerApi } from '../api/authApi';
@@ -12,6 +12,7 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const loading = useSelector((state: RootState) => state.auth.loading);
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,8 +31,9 @@ const Register: React.FC = () => {
     dispatch(setLoading(true));
 
     try {
-      await registerApi({ username, email, password, password2 });
-      navigate('/login'); 
+      const data = await registerApi({ username, email, password, password2 });
+      dispatch(setToken({ token: data.token, username }))
+      navigate('/todos'); 
     } catch (err: any) {
       if (err.response?.data?.error) {
         setError(err.response.data.error);

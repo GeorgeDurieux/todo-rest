@@ -30,6 +30,7 @@ const Navbar: React.FC = () => {
                     bg-light-navbar dark:bg-dark-navbar 
                     text-light-text dark:text-dark-text 
                     shadow-md mb-6 transition-colors duration-300">
+                      
       {/* Left section */}
       <div className="flex items-center space-x-4 font-bold text-lg">
         <Link to="/" className="hover:text-light-primary dark:hover:text-dark-primary transition">
